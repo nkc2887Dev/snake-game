@@ -12,7 +12,7 @@ import Leaderboard from './pages/Leaderboard';
 
 const App = () => (
   <div className="App">
-    <Router>
+    <Router basename="/snake-game" >
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
