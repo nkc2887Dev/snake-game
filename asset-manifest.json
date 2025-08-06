@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/snake-game/static/css/main.0cc5b496.css",
+    "main.js": "/snake-game/static/js/main.6a508d3f.js",
+    "index.html": "/snake-game/index.html",
+    "main.0cc5b496.css.map": "/snake-game/static/css/main.0cc5b496.css.map",
+    "main.6a508d3f.js.map": "/snake-game/static/js/main.6a508d3f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0cc5b496.css",
+    "static/js/main.6a508d3f.js"
+  ]
+}
