@@ -424,6 +424,27 @@ const Game = () => {
     setIsEating(false);
   };
 
+  const handleDirectionChange = (newDirection) => {
+    if (!gameRunning) return;
+    
+    switch (newDirection) {
+      case 'UP':
+        if (direction.y === 0) setDirection({ x: 0, y: -SNAKE_SIZE });
+        break;
+      case 'DOWN':
+        if (direction.y === 0) setDirection({ x: 0, y: SNAKE_SIZE });
+        break;
+      case 'LEFT':
+        if (direction.x === 0) setDirection({ x: -SNAKE_SIZE, y: 0 });
+        break;
+      case 'RIGHT':
+        if (direction.x === 0) setDirection({ x: SNAKE_SIZE, y: 0 });
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div 
       className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4"
@@ -685,272 +706,6 @@ const Game = () => {
               </div>
             )}
           
-          {gameOver && !showScoreForm && (
-            <div className="game-over-bounce text-center bg-gradient-to-r from-red-900/80 to-purple-900/80 p-8 rounded-2xl backdrop-blur-sm border border-red-500/30">
-              <p className="text-4xl font-bold text-red-400 mb-4 drop-shadow-lg">💀 Game Over!</p>
-              <p className="text-2xl text-purple-200 mb-6">Final Score: <span className="text-yellow-400 font-bold">{score}</span></p>
-              
-              <div className="flex flex-wrap gap-4 justify-center">
-                {!scoreSaved && score > 0 && (
-                  <button 
-                    onClick={() => setShowScoreForm(true)}
-                    className="group relative px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full font-bold transition-all duration-300 hover:from-green-400 hover:to-emerald-500 hover:scale-105 shadow-lg"
-                  >
-                    💾 Save Score
-                  </button>
-                )}
-                <button 
-                  onClick={resetGame}
-                  className="group relative px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-bold transition-all duration-300 hover:from-blue-400 hover:to-purple-500 hover:scale-105 shadow-lg"
-                >
-                  🔄 Play Again
-                </button>
-              </div>
-            </div>
-          )}
-          
-          {/* Game Over State */}
-          {gameOver && !showScoreForm && (
-            <div 
-              className="control-section game-over-bounce"
-              style={{
-                width: '100%',
-                textAlign: 'center',
-                background: 'rgba(239, 68, 68, 0.1)',
-                backdropFilter: 'blur(15px)',
-                borderRadius: '1rem',
-                padding: '2rem',
-                border: '1px solid rgba(239, 68, 68, 0.3)'
-              }}
-            >
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>💀</div>
-              <p 
-                className="text-red-400 mb-4"
-                style={{
-                  color: 'rgb(248, 113, 113)',
-                  fontSize: '2rem',
-                  fontWeight: '700',
-                  marginBottom: '1rem'
-                }}
-              >Game Over!</p>
-              <p 
-                className="text-purple-200 mb-6"
-                style={{
-                  color: 'rgb(221, 214, 254)',
-                  fontSize: '1.25rem',
-                  marginBottom: '1.5rem'
-                }}
-              >Final Score: <span 
-                className="text-yellow-400"
-                style={{
-                  color: 'rgb(251, 191, 36)',
-                  fontWeight: '700'
-                }}
-              >{score}</span></p>
-              
-              <div 
-                className="flex gap-4 justify-center"
-                style={{
-                  display: 'flex',
-                  gap: '1rem',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexWrap: 'wrap'
-                }}
-              >
-                {!scoreSaved && score > 0 && (
-                  <button 
-                    onClick={() => setShowScoreForm(true)}
-                    className="game-btn"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '0.75rem 2rem',
-                      background: 'linear-gradient(to right, rgb(34, 197, 94), rgb(16, 185, 129))',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '9999px',
-                      fontSize: '1rem',
-                      fontWeight: '700',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                      boxShadow: '0 10px 25px rgba(34, 197, 94, 0.5)'
-                    }}
-                    onMouseOver={(e) => {
-                      e.target.style.transform = 'scale(1.05)';
-                      e.target.style.background = 'linear-gradient(to right, rgb(74, 222, 128), rgb(34, 197, 94))';
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.transform = 'scale(1)';
-                      e.target.style.background = 'linear-gradient(to right, rgb(34, 197, 94), rgb(16, 185, 129))';
-                    }}
-                  >
-                    💾 Save Score
-                  </button>
-                )}
-                <button 
-                  onClick={resetGame}
-                  className="game-btn"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '0.75rem 2rem',
-                    background: 'linear-gradient(to right, rgb(59, 130, 246), rgb(147, 51, 234))',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '9999px',
-                    fontSize: '1rem',
-                    fontWeight: '700',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 10px 25px rgba(59, 130, 246, 0.5)'
-                  }}
-                  onMouseOver={(e) => {
-                    e.target.style.transform = 'scale(1.05)';
-                    e.target.style.background = 'linear-gradient(to right, rgb(99, 102, 241), rgb(168, 85, 247))';
-                  }}
-                  onMouseOut={(e) => {
-                    e.target.style.transform = 'scale(1)';
-                    e.target.style.background = 'linear-gradient(to right, rgb(59, 130, 246), rgb(147, 51, 234))';
-                  }}
-                >
-                  🔄 Play Again
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Save Score Form */}
-          {showScoreForm && (
-            <div 
-              className="control-section slide-in"
-              style={{
-                width: '100%',
-                textAlign: 'center',
-                background: 'rgba(34, 197, 94, 0.1)',
-                backdropFilter: 'blur(15px)',
-                borderRadius: '1rem',
-                padding: '2rem',
-                border: '1px solid rgba(34, 197, 94, 0.3)'
-              }}
-            >
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🎉</div>
-              <p 
-                className="text-green-400 mb-2"
-                style={{
-                  color: 'rgb(74, 222, 128)',
-                  fontSize: '1.75rem',
-                  fontWeight: '700',
-                  marginBottom: '0.5rem'
-                }}
-              >Awesome Score!</p>
-              <p 
-                className="text-emerald-200 mb-6"
-                style={{
-                  color: 'rgb(167, 243, 208)',
-                  fontSize: '1.125rem',
-                  marginBottom: '1.5rem'
-                }}
-              >Final Score: <span 
-                className="text-yellow-400"
-                style={{
-                  color: 'rgb(251, 191, 36)',
-                  fontWeight: '700'
-                }}
-              >{score}</span></p>
-              
-              <div 
-                className="space-y-4"
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1rem'
-                }}
-              >
-                <input
-                  type="text"
-                  placeholder="🙂 Your Name"
-                  value={playerName}
-                  onChange={(e) => setPlayerName(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '1rem',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    backdropFilter: 'blur(5px)',
-                    border: '1px solid rgba(74, 222, 128, 0.3)',
-                    borderRadius: '0.75rem',
-                    color: 'white',
-                    fontSize: '1rem',
-                    outline: 'none'
-                  }}
-                />
-                <input
-                  type="email"
-                  placeholder="📧 Your Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '1rem',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    backdropFilter: 'blur(5px)',
-                    border: '1px solid rgba(74, 222, 128, 0.3)',
-                    borderRadius: '0.75rem',
-                    color: 'white',
-                    fontSize: '1rem',
-                    outline: 'none'
-                  }}
-                />
-                <div 
-                  className="flex gap-4"
-                  style={{
-                    display: 'flex',
-                    gap: '1rem',
-                    paddingTop: '1rem'
-                  }}
-                >
-                  <button 
-                    onClick={saveScore}
-                    className="game-btn"
-                    style={{
-                      flex: 1,
-                      padding: '0.75rem',
-                      background: 'linear-gradient(to right, rgb(34, 197, 94), rgb(16, 185, 129))',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '0.75rem',
-                      fontSize: '1rem',
-                      fontWeight: '700',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease'
-                    }}
-                  >
-                    💾 Save Score
-                  </button>
-                  <button 
-                    onClick={() => setShowScoreForm(false)}
-                    className="game-btn"
-                    style={{
-                      flex: 1,
-                      padding: '0.75rem',
-                      background: 'linear-gradient(to right, rgb(75, 85, 99), rgb(55, 65, 81))',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '0.75rem',
-                      fontSize: '1rem',
-                      fontWeight: '700',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease'
-                    }}
-                  >
-                    ⏭️ Skip
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
 
           </div>
 
@@ -995,8 +750,8 @@ const Game = () => {
                   fontSize: '1rem'
                 }}
               >
-                <span style={{ color: 'rgb(74, 222, 128)', fontSize: '1.25rem' }}>⌨️</span>
-                Use arrow keys to control the snake
+                <span style={{ color: 'rgb(74, 222, 128)', fontSize: '1.25rem' }}>{isMobile ? '📱' : '⌨️'}</span>
+                {isMobile ? 'Use on-screen buttons to control the snake' : 'Use arrow keys to control the snake'}
               </div>
               <div 
                 style={{
@@ -1132,6 +887,482 @@ const Game = () => {
           </div>
 
         </div>
+
+        {/* Mobile Control Buttons */}
+        {isMobile && gameRunning && (
+          <div 
+            className="mobile-controls"
+            style={{
+              position: 'fixed',
+              bottom: '20px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '10px',
+              zIndex: 1000,
+              background: 'rgba(0, 0, 0, 0.5)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '15px',
+              padding: '15px',
+              border: '1px solid rgba(147, 51, 234, 0.3)'
+            }}
+          >
+            {/* Up Button */}
+            <button
+              onTouchStart={() => handleDirectionChange('UP')}
+              onClick={() => handleDirectionChange('UP')}
+              style={{
+                width: '60px',
+                height: '60px',
+                background: 'linear-gradient(to bottom, rgb(34, 197, 94), rgb(16, 185, 129))',
+                border: 'none',
+                borderRadius: '50%',
+                color: 'white',
+                fontSize: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 15px rgba(34, 197, 94, 0.4)',
+                userSelect: 'none',
+                touchAction: 'manipulation'
+              }}
+            >
+              ⬆️
+            </button>
+            
+            {/* Middle Row - Left and Right */}
+            <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+              <button
+                onTouchStart={() => handleDirectionChange('LEFT')}
+                onClick={() => handleDirectionChange('LEFT')}
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  background: 'linear-gradient(to right, rgb(59, 130, 246), rgb(147, 51, 234))',
+                  border: 'none',
+                  borderRadius: '50%',
+                  color: 'white',
+                  fontSize: '24px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 15px rgba(59, 130, 246, 0.4)',
+                  userSelect: 'none',
+                  touchAction: 'manipulation'
+                }}
+              >
+                ⬅️
+              </button>
+              
+              <div style={{ width: '60px', height: '60px' }}></div>
+              
+              <button
+                onTouchStart={() => handleDirectionChange('RIGHT')}
+                onClick={() => handleDirectionChange('RIGHT')}
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  background: 'linear-gradient(to left, rgb(59, 130, 246), rgb(147, 51, 234))',
+                  border: 'none',
+                  borderRadius: '50%',
+                  color: 'white',
+                  fontSize: '24px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 15px rgba(59, 130, 246, 0.4)',
+                  userSelect: 'none',
+                  touchAction: 'manipulation'
+                }}
+              >
+                ➡️
+              </button>
+            </div>
+            
+            {/* Down Button */}
+            <button
+              onTouchStart={() => handleDirectionChange('DOWN')}
+              onClick={() => handleDirectionChange('DOWN')}
+              style={{
+                width: '60px',
+                height: '60px',
+                background: 'linear-gradient(to top, rgb(34, 197, 94), rgb(16, 185, 129))',
+                border: 'none',
+                borderRadius: '50%',
+                color: 'white',
+                fontSize: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 15px rgba(34, 197, 94, 0.4)',
+                userSelect: 'none',
+                touchAction: 'manipulation'
+              }}
+            >
+              ⬇️
+            </button>
+          </div>
+        )}
+
+        {/* Game Over Modal */}
+        {(gameOver || showScoreForm) && (
+          <div 
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              backdropFilter: 'blur(10px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 9999,
+              padding: '2rem'
+            }}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                // Click outside modal - don't close, just ignore
+              }
+            }}
+          >
+            <div 
+              style={{
+                background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(88, 28, 135, 0.95) 50%, rgba(30, 41, 59, 0.95) 100%)',
+                backdropFilter: 'blur(20px)',
+                borderRadius: '2rem',
+                padding: '3rem',
+                maxWidth: isMobile ? '90vw' : '500px',
+                width: '100%',
+                maxHeight: '90vh',
+                overflowY: 'auto',
+                border: '2px solid rgba(147, 51, 234, 0.3)',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+                textAlign: 'center',
+                animation: 'modalSlideIn 0.3s ease-out'
+              }}
+            >
+              {!showScoreForm ? (
+                // Game Over Content
+                <>
+                  <div style={{ fontSize: '5rem', marginBottom: '1.5rem' }}>💀</div>
+                  
+                  <h2 
+                    style={{
+                      fontSize: '3rem',
+                      fontWeight: '900',
+                      background: 'linear-gradient(to right, rgb(248, 113, 113), rgb(239, 68, 68), rgb(220, 38, 38))',
+                      WebkitBackgroundClip: 'text',
+                      backgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      marginBottom: '1rem',
+                      textShadow: '0 4px 8px rgba(239, 68, 68, 0.3)'
+                    }}
+                  >
+                    Game Over!
+                  </h2>
+                  
+                  <div 
+                    style={{
+                      background: 'rgba(251, 191, 36, 0.1)',
+                      backdropFilter: 'blur(10px)',
+                      borderRadius: '1rem',
+                      padding: '1.5rem',
+                      margin: '2rem 0',
+                      border: '1px solid rgba(251, 191, 36, 0.3)'
+                    }}
+                  >
+                    <p 
+                      style={{
+                        fontSize: '1.5rem',
+                        color: 'rgb(221, 214, 254)',
+                        marginBottom: '0.5rem'
+                      }}
+                    >
+                      Final Score
+                    </p>
+                    <p 
+                      style={{
+                        fontSize: '3rem',
+                        fontWeight: '900',
+                        color: 'rgb(251, 191, 36)',
+                        textShadow: '0 2px 4px rgba(251, 191, 36, 0.5)'
+                      }}
+                    >
+                      {score}
+                    </p>
+                  </div>
+                  
+                  <div 
+                    style={{
+                      display: 'flex',
+                      flexDirection: isMobile ? 'column' : 'row',
+                      gap: '1rem',
+                      justifyContent: 'center',
+                      marginTop: '2rem'
+                    }}
+                  >
+                    {!scoreSaved && score > 0 && (
+                      <button 
+                        onClick={() => setShowScoreForm(true)}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '0.5rem',
+                          padding: '1rem 2rem',
+                          background: 'linear-gradient(to right, rgb(34, 197, 94), rgb(16, 185, 129))',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '1rem',
+                          fontSize: '1.125rem',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          boxShadow: '0 10px 25px rgba(34, 197, 94, 0.4)',
+                          minWidth: '160px'
+                        }}
+                        onMouseOver={(e) => {
+                          e.target.style.transform = 'scale(1.05)';
+                          e.target.style.boxShadow = '0 15px 35px rgba(34, 197, 94, 0.6)';
+                        }}
+                        onMouseOut={(e) => {
+                          e.target.style.transform = 'scale(1)';
+                          e.target.style.boxShadow = '0 10px 25px rgba(34, 197, 94, 0.4)';
+                        }}
+                      >
+                        💾 Save Score
+                      </button>
+                    )}
+                    
+                    <button 
+                      onClick={resetGame}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '0.5rem',
+                        padding: '1rem 2rem',
+                        background: 'linear-gradient(to right, rgb(59, 130, 246), rgb(147, 51, 234))',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '1rem',
+                        fontSize: '1.125rem',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        boxShadow: '0 10px 25px rgba(59, 130, 246, 0.4)',
+                        minWidth: '160px'
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.transform = 'scale(1.05)';
+                        e.target.style.boxShadow = '0 15px 35px rgba(59, 130, 246, 0.6)';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.transform = 'scale(1)';
+                        e.target.style.boxShadow = '0 10px 25px rgba(59, 130, 246, 0.4)';
+                      }}
+                    >
+                      🔄 Play Again
+                    </button>
+                  </div>
+                </>
+              ) : (
+                // Save Score Form Content
+                <>
+                  <div style={{ fontSize: '4rem', marginBottom: '1.5rem' }}>🎉</div>
+                  
+                  <h2 
+                    style={{
+                      fontSize: '2.5rem',
+                      fontWeight: '900',
+                      background: 'linear-gradient(to right, rgb(74, 222, 128), rgb(34, 197, 94), rgb(16, 185, 129))',
+                      WebkitBackgroundClip: 'text',
+                      backgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      marginBottom: '0.5rem',
+                      textShadow: '0 4px 8px rgba(34, 197, 94, 0.3)'
+                    }}
+                  >
+                    Awesome Score!
+                  </h2>
+                  
+                  <div 
+                    style={{
+                      background: 'rgba(251, 191, 36, 0.1)',
+                      backdropFilter: 'blur(10px)',
+                      borderRadius: '1rem',
+                      padding: '1.5rem',
+                      margin: '1.5rem 0',
+                      border: '1px solid rgba(251, 191, 36, 0.3)'
+                    }}
+                  >
+                    <p 
+                      style={{
+                        fontSize: '1.25rem',
+                        color: 'rgb(167, 243, 208)',
+                        marginBottom: '0.5rem'
+                      }}
+                    >
+                      Your Final Score
+                    </p>
+                    <p 
+                      style={{
+                        fontSize: '2.5rem',
+                        fontWeight: '900',
+                        color: 'rgb(251, 191, 36)',
+                        textShadow: '0 2px 4px rgba(251, 191, 36, 0.5)'
+                      }}
+                    >
+                      {score}
+                    </p>
+                  </div>
+                  
+                  <div 
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '1rem',
+                      marginTop: '2rem'
+                    }}
+                  >
+                    <input
+                      type="text"
+                      placeholder="🙂 Enter Your Name"
+                      value={playerName}
+                      onChange={(e) => setPlayerName(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '1rem 1.5rem',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        backdropFilter: 'blur(10px)',
+                        border: '1px solid rgba(74, 222, 128, 0.3)',
+                        borderRadius: '1rem',
+                        color: 'white',
+                        fontSize: '1.125rem',
+                        outline: 'none',
+                        boxSizing: 'border-box'
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.border = '2px solid rgba(74, 222, 128, 0.6)';
+                        e.target.style.boxShadow = '0 0 20px rgba(74, 222, 128, 0.3)';
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.border = '1px solid rgba(74, 222, 128, 0.3)';
+                        e.target.style.boxShadow = 'none';
+                      }}
+                    />
+                    
+                    <input
+                      type="email"
+                      placeholder="📧 Enter Your Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '1rem 1.5rem',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        backdropFilter: 'blur(10px)',
+                        border: '1px solid rgba(74, 222, 128, 0.3)',
+                        borderRadius: '1rem',
+                        color: 'white',
+                        fontSize: '1.125rem',
+                        outline: 'none',
+                        boxSizing: 'border-box'
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.border = '2px solid rgba(74, 222, 128, 0.6)';
+                        e.target.style.boxShadow = '0 0 20px rgba(74, 222, 128, 0.3)';
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.border = '1px solid rgba(74, 222, 128, 0.3)';
+                        e.target.style.boxShadow = 'none';
+                      }}
+                    />
+                    
+                    <div 
+                      style={{
+                        display: 'flex',
+                        flexDirection: isMobile ? 'column' : 'row',
+                        gap: '1rem',
+                        marginTop: '1rem'
+                      }}
+                    >
+                      <button 
+                        onClick={saveScore}
+                        style={{
+                          flex: 1,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '0.5rem',
+                          padding: '1rem',
+                          background: 'linear-gradient(to right, rgb(34, 197, 94), rgb(16, 185, 129))',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '1rem',
+                          fontSize: '1.125rem',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          boxShadow: '0 10px 25px rgba(34, 197, 94, 0.4)'
+                        }}
+                        onMouseOver={(e) => {
+                          e.target.style.transform = 'scale(1.02)';
+                          e.target.style.boxShadow = '0 15px 35px rgba(34, 197, 94, 0.6)';
+                        }}
+                        onMouseOut={(e) => {
+                          e.target.style.transform = 'scale(1)';
+                          e.target.style.boxShadow = '0 10px 25px rgba(34, 197, 94, 0.4)';
+                        }}
+                      >
+                        💾 Save Score
+                      </button>
+                      
+                      <button 
+                        onClick={() => setShowScoreForm(false)}
+                        style={{
+                          flex: 1,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '0.5rem',
+                          padding: '1rem',
+                          background: 'linear-gradient(to right, rgb(75, 85, 99), rgb(55, 65, 81))',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '1rem',
+                          fontSize: '1.125rem',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          boxShadow: '0 10px 25px rgba(75, 85, 99, 0.4)'
+                        }}
+                        onMouseOver={(e) => {
+                          e.target.style.transform = 'scale(1.02)';
+                          e.target.style.boxShadow = '0 15px 35px rgba(75, 85, 99, 0.6)';
+                        }}
+                        onMouseOut={(e) => {
+                          e.target.style.transform = 'scale(1)';
+                          e.target.style.boxShadow = '0 10px 25px rgba(75, 85, 99, 0.4)';
+                        }}
+                      >
+                        ⏭️ Skip
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
 
       </div>
     </div>
