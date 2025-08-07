@@ -36,8 +36,22 @@ const SimpleHome = () => {
       >
         
         {/* Main Title Section */}
-        <div style={{ flex: '0 0 auto', marginBottom: '2rem' }}>
-          <h1 
+        <div className="" style={{ flex: '0 0 auto', marginBottom: '2rem' }}>
+          <span 
+            className=""
+            style={{
+              fontSize: '4.5rem',
+              fontWeight: '900',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              textAlign: 'center',
+              marginBottom: '1rem',
+              marginRight: '1rem'
+            }}
+          >
+          🐍
+          </span>
+          <span
             className="game-title"
             style={{
               fontSize: '3.5rem',
@@ -50,8 +64,8 @@ const SimpleHome = () => {
               marginBottom: '1rem'
             }}
           >
-            🐍 MERN Snake Game
-          </h1>
+            Snake Game
+          </span>
           <div 
             className="text-xl text-purple-300 font-medium"
             style={{ 

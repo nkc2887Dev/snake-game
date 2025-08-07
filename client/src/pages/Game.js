@@ -502,21 +502,35 @@ const Game = () => {
             className="slide-in mb-6"
             style={{ marginBottom: '1.5rem', textAlign: 'center' }}
           >
-            <h1 
-              className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 mb-2"
-              style={{
-                fontSize: '3rem',
-                fontWeight: '900',
-                background: 'linear-gradient(to right, rgb(74, 222, 128), rgb(59, 130, 246), rgb(147, 51, 234))',
-                WebkitBackgroundClip: 'text',
-                backgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                marginBottom: '0.5rem',
-                textAlign: 'center'
-              }}
-            >
-              🐍 Snake Game
-            </h1>
+          <span 
+            className=""
+            style={{
+              fontSize: '4.5rem',
+              fontWeight: '900',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              textAlign: 'center',
+              marginBottom: '1rem',
+              marginRight: '1rem'
+            }}
+          >
+          🐍
+          </span>
+          <span
+            className="game-title"
+            style={{
+              fontSize: '3.5rem',
+              fontWeight: '900',
+              background: 'linear-gradient(to right, rgb(74, 222, 128), rgb(59, 130, 246), rgb(147, 51, 234))',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textAlign: 'center',
+              marginBottom: '1rem'
+            }}
+          >
+            Snake Game
+          </span>
           </div>
 
           {/* Score Display */}
